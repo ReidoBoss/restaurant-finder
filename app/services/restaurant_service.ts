@@ -10,7 +10,17 @@ const FSQR_API_URL = env.get('FSQR_API_URL')
 @inject()
 export class RestaurantService {
   constructor(protected finderLLM: RestaurantFinderLLM) {}
-
+  /**
+   *
+   * @param message - The natural language query to ask the LLM.
+   *   Example:
+   *   ```
+   *   Find me a cheap sushi restaurant in downtown Los Angeles that's open now
+   *   and has at least a 4-star rating.
+   *   ```
+   *
+   * @param response - The HTTP response object used to send back results.
+   */
   async find(message: string, response: Response) {
     const params = await this.finderLLM.ask(message)
     const FSQR_API_KEY = env.get('FSQR_API_KEY')
@@ -24,6 +34,10 @@ export class RestaurantService {
       },
     })
     const placeSearchResult = await PlaceSearchResultSchema.validate(result.data.results)
-    return response.ok(placeSearchResult)
+
+    response.ok({
+      produced_params: params,
+      result: placeSearchResult,
+    })
   }
 }
