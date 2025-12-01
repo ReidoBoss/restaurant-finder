@@ -18,4 +18,5 @@ export default await Env.create(new URL('../', import.meta.url), {
   HOST: Env.schema.string({ format: 'host' }),
   LOG_LEVEL: Env.schema.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']),
   API_SECRET: Env.schema.string(),
+  GEMINI_API_KEY: Env.schema.string(),
 })
