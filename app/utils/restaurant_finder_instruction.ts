@@ -18,6 +18,7 @@ RULES:
 3. Do NOT include comments, explanations, apologies, or metadata.
 4. Only include properties explicitly inferable from the input.
 5. If a property cannot be determined, omit it entirely (do not return null, empty strings, or placeholders).
+6. Always assume the the user is asking about restaurants
 `
 
 const exampleReturn = {
