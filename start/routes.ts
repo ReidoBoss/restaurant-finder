@@ -8,9 +8,12 @@
 */
 
 import router from '@adonisjs/core/services/router'
+const RestaurantController = () => import('#controllers/restaurant_controller')
 
 router.get('/', async () => {
   return {
-    hello: 'world',
+    message: 'healthy',
   }
 })
+
+router.get('/api/execute', [RestaurantController, 'find'])
