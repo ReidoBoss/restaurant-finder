@@ -18,7 +18,6 @@ RULES:
 3. Do NOT include comments, explanations, apologies, or metadata.
 4. Only include properties explicitly inferable from the input.
 5. If a property cannot be determined, omit it entirely (do not return null, empty strings, or placeholders).
-6. Always assume the the user is asking about restaurants
 `
 
 const exampleReturn = {
@@ -124,8 +123,23 @@ const stringifiedInstructions = metadataInstructions.map((instruction) =>
 
 const additionalContext = `
 Below are the allowed JSON properties (all optional).
-Include only those that are relevant to the user's request:
+Include only those that apply to the user's request:
 ${stringifiedInstructions}
+
+IMPORTANT — Location Parameter Rule:
+You must include ONLY ONE location parameter from the following valid Foursquare Place Search options:
+
+1. ll + radius → latitude/longitude with optional circular radius
+2. near → a geocodable place name
+3. ne + sw → rectangular boundary coordinates
+
+Never combine these. If one is provided, all others must be omitted.
+
+Correct example:
+{ query: "restaurant", near: "lapu lapu city" }
+
+Incorrect example:
+{ query: "restaurant", near: "lapu lapu city", radius: 1000 }
 `
 
 export const instructions = [persona, rules, example, additionalContext].join('\n')
