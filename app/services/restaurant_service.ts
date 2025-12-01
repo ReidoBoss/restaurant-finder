@@ -4,6 +4,7 @@ import { inject } from '@adonisjs/core'
 
 import type { Response } from '@adonisjs/core/http'
 import { RestaurantFinderLLM } from '#services/restaurant_finder_llm_service'
+import { PlaceSearchResultSchema } from '#validators/place'
 
 const FSQR_API_URL = env.get('FSQR_API_URL')
 @inject()
@@ -22,6 +23,7 @@ export class RestaurantService {
         'authorization': `Bearer ${FSQR_API_KEY}`,
       },
     })
-    return response.ok(result.data)
+    const placeSearchResult = await PlaceSearchResultSchema.validate(result.data.results)
+    return response.ok(placeSearchResult)
   }
 }
