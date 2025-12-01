@@ -32,7 +32,7 @@
     # Server
     TZ=UTC
     PORT=3333
-    HOST=0.0.0.0
+    HOST=localhost
     LOG_LEVEL=info
     APP_KEY=<YOUR_APP_KEY_HERE> # you can use random chars, 16 minimum
     NODE_ENV=development
