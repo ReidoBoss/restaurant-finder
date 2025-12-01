@@ -8,6 +8,8 @@
 */
 
 import router from '@adonisjs/core/services/router'
+import { middleware } from '#start/kernel'
+
 const RestaurantController = () => import('#controllers/restaurant_controller')
 
 router.get('/', async () => {
@@ -16,4 +18,4 @@ router.get('/', async () => {
   }
 })
 
-router.get('/api/execute', [RestaurantController, 'find'])
+router.get('/api/execute', [RestaurantController, 'find']).use(middleware.api_secret())
